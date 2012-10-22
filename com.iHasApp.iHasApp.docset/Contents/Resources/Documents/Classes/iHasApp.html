@@ -1,0 +1,605 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>iHasApp Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.0.5 (build 789)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">iHasApp </a></h1>
+				<a id="developerHome" href="../index.html">Objective-See, LLC</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">iHasApp Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/country">&nbsp;&nbsp;&nbsp;&nbsp;country</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/detectAppDictionariesWithIncremental:withSuccess:withFailure:">&nbsp;&nbsp;&nbsp;&nbsp;- detectAppDictionariesWithIncremental:withSuccess:withFailure:</option>
+	
+	<option value="//api/name/detectAppIdsWithIncremental:withSuccess:withFailure:">&nbsp;&nbsp;&nbsp;&nbsp;- detectAppIdsWithIncremental:withSuccess:withFailure:</option>
+	
+	<option value="//api/name/retrieveAppDictionariesForAppIds:withSuccess:withFailure:">&nbsp;&nbsp;&nbsp;&nbsp;- retrieveAppDictionariesForAppIds:withSuccess:withFailure:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Detection Methods">Detection Methods</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Informational Methods">Informational Methods</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/country">country</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/detectAppDictionariesWithIncremental:withSuccess:withFailure:">detectAppDictionariesWithIncremental:withSuccess:withFailure:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/detectAppIdsWithIncremental:withSuccess:withFailure:">detectAppIdsWithIncremental:withSuccess:withFailure:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/retrieveAppDictionariesForAppIds:withSuccess:withFailure:">retrieveAppDictionariesForAppIds:withSuccess:withFailure:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="iHasApp Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">iHasApp Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">iHasApp.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>iHasApp</code> class is used to perform on-device app detection. It can return detected appIds, or perform additional API calls and return detected appDictionaries.</p>
+
+<p>See <a href="http://www.iHasApp.com/">http://www.iHasApp.com/</a> for information and updates.</p>
+
+<p><em>Requirements:</em> iOS base SDK 5.0+, Internet connectivity</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/country">&nbsp;&nbsp;country</a></code>
+		<span class="tooltip"><p>The two-letter country code for the store you want to search. The search uses the default store front for the specified country. Default is [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode].</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Detection Methods" name="task_Detection Methods"></a>
+						<h3 class="subsubtitle task-title">Detection Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/detectAppIdsWithIncremental:withSuccess:withFailure:">&ndash;&nbsp;detectAppIdsWithIncremental:withSuccess:withFailure:</a></code>
+		<span class="tooltip"><p>Starts an appId detection process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/detectAppDictionariesWithIncremental:withSuccess:withFailure:">&ndash;&nbsp;detectAppDictionariesWithIncremental:withSuccess:withFailure:</a></code>
+		<span class="tooltip"><p>Starts an appDictionary detection process.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Informational Methods" name="task_Informational Methods"></a>
+						<h3 class="subsubtitle task-title">Informational Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/retrieveAppDictionariesForAppIds:withSuccess:withFailure:">&ndash;&nbsp;retrieveAppDictionariesForAppIds:withSuccess:withFailure:</a></code>
+		<span class="tooltip"><p>Returns the associated App Store information for the desired apps.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/country" title="country"></a>
+	<h3 class="subsubtitle method-title">country</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The two-letter country code for the store you want to search. The search uses the default store front for the specified country. Default is [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode].</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSString *country</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>See <a href="http://en.wikipedia.org/wiki/ISO">http://en.wikipedia.org/wiki/ISO</a>_3166-1_alpha-2 for a list of ISO Country Codes.</p>
+
+<pre><code>//To determine device-specific country codes, use:
+NSString *countryCode = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+</code></pre>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">iHasApp.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/detectAppDictionariesWithIncremental:withSuccess:withFailure:" title="detectAppDictionariesWithIncremental:withSuccess:withFailure:"></a>
+	<h3 class="subsubtitle method-title">detectAppDictionariesWithIncremental:withSuccess:withFailure:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Starts an appDictionary detection process.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)detectAppDictionariesWithIncremental:(void ( ^ ) ( NSArray *appDictionaries ))<em>incrementalBlock</em> withSuccess:(void ( ^ ) ( NSArray *appDictionaries ))<em>successBlock</em> withFailure:(void ( ^ ) ( NSError *error ))<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>incrementalBlock</em></dt>
+			<dd><p>The block invoked after a chunk of appDictionaries are detected.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>The block invoked after all possible appDictionaries are detected.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>The block to invoke if the access operation fails—for example, if there is a network error.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<pre><code>iHasApp *detectionObject = [[iHasApp alloc] init];
+[detectionObject detectAppDictionariesWithIncremental:^(NSArray *appDictionaries) {
+    NSLog(@"Incremental appDictionaries.count: %i", appDictionaries.count);
+} withSuccess:^(NSArray *appDictionaries) {
+    NSLog(@"Successful appDictionaries.count: %i", appDictionaries.count);
+} withFailure:^(NSError *error) {
+    NSLog(@"Failure: %@", error.localizedDescription);
+}];
+</code></pre>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/detectAppIdsWithIncremental:withSuccess:withFailure:">&ndash; detectAppIdsWithIncremental:withSuccess:withFailure:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">iHasApp.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/detectAppIdsWithIncremental:withSuccess:withFailure:" title="detectAppIdsWithIncremental:withSuccess:withFailure:"></a>
+	<h3 class="subsubtitle method-title">detectAppIdsWithIncremental:withSuccess:withFailure:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Starts an appId detection process.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)detectAppIdsWithIncremental:(void ( ^ ) ( NSArray *appIds ))<em>incrementalBlock</em> withSuccess:(void ( ^ ) ( NSArray *appIds ))<em>successBlock</em> withFailure:(void ( ^ ) ( NSError *error ))<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>incrementalBlock</em></dt>
+			<dd><p>The block invoked after a chunk of appIds are detected.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>The block invoked after all possible appIds are detected.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>The block to invoke if the access operation fails—for example, if there is a network error.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<pre><code>iHasApp *detectionObject = [[iHasApp alloc] init];
+[detectionObject detectAppIdsWithIncremental:^(NSArray *appIds) {
+    NSLog(@"Incremental appIds.count: %i", appIds.count);
+} withSuccess:^(NSArray *appIds) {
+    NSLog(@"Successful appIds.count: %i", appIds.count);
+} withFailure:^(NSError *error) {
+    NSLog(@"Failure: %@", error.localizedDescription);
+}];
+</code></pre>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/detectAppDictionariesWithIncremental:withSuccess:withFailure:">&ndash; detectAppDictionariesWithIncremental:withSuccess:withFailure:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">iHasApp.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/retrieveAppDictionariesForAppIds:withSuccess:withFailure:" title="retrieveAppDictionariesForAppIds:withSuccess:withFailure:"></a>
+	<h3 class="subsubtitle method-title">retrieveAppDictionariesForAppIds:withSuccess:withFailure:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the associated App Store information for the desired apps.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)retrieveAppDictionariesForAppIds:(NSArray *)<em>appIds</em> withSuccess:(void ( ^ ) ( NSArray *appDictionaries ))<em>successBlock</em> withFailure:(void ( ^ ) ( NSError *error ))<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>appIds</em></dt>
+			<dd><p>An array of appIds you want to search for on the iTunes App Store.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>The block invoked after the search successfully returns.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>The block to invoke if the search operation fails—for example, if there is a network error.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This is used internally to convert appIds to appDictionaries.</p>
+
+<p>Data returned is from the iTunes Search API. (e.g: <a href="http://itunes.apple.com/lookup?id=284882215">http://itunes.apple.com/lookup?id=284882215</a> )</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">iHasApp.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 Objective-See, LLC. All rights reserved. (Last updated: 2012-10-22)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 789)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,47 +1,18 @@
 //
 //  iHasApp.h
-//  iHasApp
 //
-//  Created by Daniel Amitay on 4/30/12.
-//  Copyright (c) 2012 Objective-See, LLC. All rights reserved.
+//  Created by Daniel Amitay on 10/21/12.
+//  Copyright (c) 2012 Objective-See. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-typedef enum {
-    iHasAppErrorConnection = 0,
-    iHasAppErrorInvalidKey = 1,
-    iHasAppErrorReachedLimit = 2,
-    iHasAppErrorUnknown = 3
-} iHasAppError;
-
-
-/** The iHasAppDelegate protocol describes the interface iHasApp delegates should adopt to respond to app detection events.
- */
-@protocol iHasAppDelegate <NSObject>
-
-@optional
-
-/** Sent to the delegate when the app detection has successfully completed.
+/** The `iHasApp` class is used to perform on-device app detection. It can return detected appIds, or perform additional API calls and return detected appDictionaries.
  
- @param allApps An array containing NSDictionaries of the iHasApp object's most recently detected apps. Equivalent to calling -detectedApps on the iHasApp object.
- @see appDetectionDidSucceed:
- */
-- (void)appDetectionDidSucceed:(NSArray *)allApps;
-
-/** Sent to the delegate when the app detection has unsuccessfully terminated.
+ See http://www.iHasApp.com/ for information and updates.
  
- @param detectionError Contains an error enum describing the problem.
- @see appDetectionDidSucceed:
- */
-- (void)appDetectionDidFail:(iHasAppError)detectionError;
-
-@end
-
-
-/** The `iHasApp` class is used to perform on-device app detection.
- 
- You will need to register for a free account at https://www.ihasapp.com to obtain a valid API key.
+ *Requirements:* iOS base SDK 5.0+, Internet connectivity
+  
  */
 @interface iHasApp : NSObject
 
@@ -50,15 +21,7 @@ typedef enum {
  * ---------------------------------------------------------------------------------------
  */
 
-/** The API key from your https://www.ihasapp.com account dashboard. An incorrect API key will result in a failed app detection. Default is nil.
- */
-@property (nonatomic, strong) NSString *APIKey;
-
-/** The delegate object to receive detection events.
- */
-@property (nonatomic, assign) NSObject<iHasAppDelegate> *delegate;
-
-/** The two-letter country code for the store you want to search. The search uses the default store front for the specified country. Default is US.
+/** The two-letter country code for the store you want to search. The search uses the default store front for the specified country. Default is [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode].
  
  See http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 for a list of ISO Country Codes.
  
@@ -68,53 +31,70 @@ typedef enum {
  */
 @property (nonatomic, strong) NSString *country;
 
+
 /**---------------------------------------------------------------------------------------
- * @name Starting the Detection
+ * @name Detection Methods
  * ---------------------------------------------------------------------------------------
  */
 
-/** Initializes and returns the iHasApp object with the specified delegate and APIKey.
-
- @param delegate The object to receive the delegate callbacks.
- @param key The API key from your https://www.ihasapp.com account dashboard.
- @return An initialized iHasApp object.
+/** Starts an appId detection process.
+ 
+    iHasApp *detectionObject = [[iHasApp alloc] init];
+    [detectionObject detectAppIdsWithIncremental:^(NSArray *appIds) {
+        NSLog(@"Incremental appIds.count: %i", appIds.count);
+    } withSuccess:^(NSArray *appIds) {
+        NSLog(@"Successful appIds.count: %i", appIds.count);
+    } withFailure:^(NSError *error) {
+        NSLog(@"Failure: %@", error.localizedDescription);
+    }];
+ 
+ @param incrementalBlock The block invoked after a chunk of appIds are detected.
+ @param successBlock The block invoked after all possible appIds are detected.
+ @param failureBlock The block to invoke if the access operation fails—for example, if there is a network error.
+ @see detectAppDictionariesWithIncremental:withSuccess:withFailure:
  */
-- (iHasApp *)initWithDelegate:(id<iHasAppDelegate>)delegate andKey:(NSString *)key;
+- (void)detectAppIdsWithIncremental:(void (^)(NSArray *appIds))incrementalBlock
+                        withSuccess:(void (^)(NSArray *appIds))successBlock
+                        withFailure:(void (^)(NSError *error))failureBlock;
 
-
-/** Starts the app detection process.
+/** Starts an appDictionary detection process.
+ 
+    iHasApp *detectionObject = [[iHasApp alloc] init];
+    [detectionObject detectAppDictionariesWithIncremental:^(NSArray *appDictionaries) {
+        NSLog(@"Incremental appDictionaries.count: %i", appDictionaries.count);
+    } withSuccess:^(NSArray *appDictionaries) {
+        NSLog(@"Successful appDictionaries.count: %i", appDictionaries.count);
+    } withFailure:^(NSError *error) {
+        NSLog(@"Failure: %@", error.localizedDescription);
+    }];
+ 
+ @param incrementalBlock The block invoked after a chunk of appDictionaries are detected.
+ @param successBlock The block invoked after all possible appDictionaries are detected.
+ @param failureBlock The block to invoke if the access operation fails—for example, if there is a network error.
+ @see detectAppIdsWithIncremental:withSuccess:withFailure:
  */
-- (void)beginDetection;
+- (void)detectAppDictionariesWithIncremental:(void (^)(NSArray *appDictionaries))incrementalBlock
+                                 withSuccess:(void (^)(NSArray *appDictionaries))successBlock
+                                 withFailure:(void (^)(NSError *error))failureBlock;
+
 
 /**---------------------------------------------------------------------------------------
- * @name Informational
+ * @name Informational Methods
  * ---------------------------------------------------------------------------------------
  */
 
-/** Returns an array containing NSDictionaries of the most recently detected apps.
+/** Returns the associated App Store information for the desired apps.
  
- @return An array containing NSDictionaries of the iHasApp object's most recently detected apps, or nil if the detection is incomplete or unsuccessful. The order of the dictionaries in the array is not defined.
+ This is used internally to convert appIds to appDictionaries.
  
- The dictionaries are the same as the results returned from an iTunes Search API request. See the "results" of the following api response for an example: http://itunes.apple.com/lookup?id=284882215
+ Data returned is from the iTunes Search API. (e.g: http://itunes.apple.com/lookup?id=284882215 )
  
- @see appIds
+ @param appIds An array of appIds you want to search for on the iTunes App Store.
+ @param successBlock The block invoked after the search successfully returns.
+ @param failureBlock The block to invoke if the search operation fails—for example, if there is a network error.
  */
-- (NSArray *)detectedApps;
-
-
-/** Returns an array containing NSStrings of the most recently detected app ids (referred to as 'trackId' in iTunes dictionaries).
- 
- @return An array containing NSStrings of the iHasApp object's most recently detected app ids, or nil if the detection is incomplete or unsuccessful. The order of the strings in the array is not defined.
- @see detectedApps
- */
-- (NSArray *)appIds;
-
-
-/** Returns the iHasApp framework version string.
- 
- @return An NSString representation of the iHasApp framework version.
- */
-- (NSString *)version;
-
+- (void)retrieveAppDictionariesForAppIds:(NSArray *)appIds
+                             withSuccess:(void (^)(NSArray *appDictionaries))successBlock
+                             withFailure:(void (^)(NSError *error))failureBlock;
 
 @end
