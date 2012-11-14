@@ -3,7 +3,7 @@
 //  iHasAppExample
 //
 //  Created by Daniel Amitay on 10/21/12.
-//  Copyright (c) 2012 Objective-See. All rights reserved.
+//  Copyright (c) 2012 Daniel Amitay. All rights reserved.
 //
 
 #import "DetailViewController.h"
@@ -86,11 +86,6 @@
 }
 
 #pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {

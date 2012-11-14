@@ -1,28 +1,30 @@
-Notice (Nov 13, 2012):
------------
-
-iHasApp's codebase and dataset will be open sourced within the week. Check back!
-
 iHasApp Framework
 =========================
 
 The iHasApp iOS Framework allows you to detect installed apps on a user's device.
 
-Detection results can be in the form of an array of detected appIds, or an array of appDictionaries from the iTunes Search API.
+Detection results can be in the form of an array of detected appIds, or an array of appDictionaries from the [iTunes Search API](http://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html).
+
+![Screenshot](https://github.com/danielamitay/iHasApp/raw/master/screenshot.png)
+
+Background
+-----------
+
+- [How To Detect Installed iOS Apps](http://danielamitay.com/blog/2011/2/16/how-to-detect-installed-ios-apps) - (Feb 2011)
+- [Detailed iPhone App IPA Statistics](http://danielamitay.com/blog/2011/5/9/detailed-iphone-app-ipa-statistics) - (May 2011)
+
 
 Basic Setup
 -----------
 
-1. Add iHasApp.framework to your project and ensure that it is linked to the project target.
-
-2. Add `#import <iHasApp/iHasApp.h>` to the classes in which you wish to access iHasApp.
-
+1. Add the iHasApp subfolder to your project and ensure that it is linked to the project target.
+2. Add `#import "iHasApp.h"` to the classes in which you wish to access iHasApp.
 3. Initialize and begin detection methods.
 
 Example code:
 
 ```objective-c
-iHasApp *detectionObject = [[iHasApp alloc] init];
+iHasApp *detectionObject = [iHasApp new];
 [detectionObject detectAppDictionariesWithIncremental:^(NSArray *appDictionaries) {
     NSLog(@"Incremental appDictionaries.count: %i", appDictionaries.count);
 } withSuccess:^(NSArray *appDictionaries) {
@@ -36,7 +38,9 @@ Requirements
 -----------
 
 - iOS base SDK 5.0+
-- Internet connectivity
+- Internet connectivity (optional if schemeApps.json is included)
+
+*Note*: schemeApps.json only adds ~180kB to your final, compiled IPA
 
 App Store Safe
 --------------
@@ -57,9 +61,16 @@ Documentation
 
 The `iHasApp.h` header file is structurally commented. If you would like to see the Appledoc representation, visit the [iHasApp Documentation](http://www.ihasapp.com/documentation).
 
+To-Do
+--------------
+
+- Comment code where appropriate
+- Provide IPA processing code
+- Informational methods
+
 Info & Support
 --------------
 
-Website: [iHasApp](http://www.ihasapp.com)
-Author: [Daniel Amitay](https://github.com/danielamitay)
-Email: daniel@ihasapp.com
+- Website: [iHasApp](http://www.ihasapp.com)
+- Author: [Daniel Amitay](https://github.com/danielamitay)
+- Email: daniel@ihasapp.com

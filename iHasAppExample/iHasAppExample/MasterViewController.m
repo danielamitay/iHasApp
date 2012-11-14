@@ -3,7 +3,7 @@
 //  iHasAppExample
 //
 //  Created by Daniel Amitay on 10/21/12.
-//  Copyright (c) 2012 Objective-See. All rights reserved.
+//  Copyright (c) 2012 Daniel Amitay. All rights reserved.
 //
 
 #import "MasterViewController.h"
@@ -12,7 +12,7 @@
 
 #import "UIImageView+WebCache.h"
 
-#import <iHasApp/iHasApp.h>
+#import "iHasApp.h"
 
 @interface MasterViewController ()
 
@@ -41,7 +41,7 @@
                                                                                         action:@selector(detectApps)];
     self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     
-    self.detectionObject = [[iHasApp alloc] init];
+    self.detectionObject = [iHasApp new];
     
     [self detectApps];
 }
@@ -98,11 +98,6 @@
 
 
 #pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {

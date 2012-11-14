@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63BE815216531C4D0082D861 /* iHasApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BE815016531C4D0082D861 /* iHasApp.m */; };
+		63BE81571653615E0082D861 /* schemeApps.json in Resources */ = {isa = PBXBuildFile; fileRef = 63BE81561653615E0082D861 /* schemeApps.json */; };
 		63FF2FD5163485580054D385 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FF2FD4163485580054D385 /* UIKit.framework */; };
 		63FF2FD7163485580054D385 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FF2FD6163485580054D385 /* Foundation.framework */; };
 		63FF2FD9163485580054D385 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FF2FD8163485580054D385 /* CoreGraphics.framework */; };
@@ -18,7 +20,6 @@
 		63FF2FEB163485590054D385 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FF2FEA163485590054D385 /* Default-568h@2x.png */; };
 		63FF2FEE163485590054D385 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FF2FED163485590054D385 /* MasterViewController.m */; };
 		63FF2FF1163485590054D385 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FF2FF0163485590054D385 /* DetailViewController.m */; };
-		63FF3005163486B00054D385 /* iHasApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FF3004163486B00054D385 /* iHasApp.framework */; };
 		63FF30181634870B0054D385 /* placeholder-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FF30071634870B0054D385 /* placeholder-icon.png */; };
 		63FF30191634870B0054D385 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FF30091634870B0054D385 /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63FF301A1634870B0054D385 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FF300D1634870B0054D385 /* SDWebImageDecoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -29,6 +30,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		63BE814F16531C4D0082D861 /* iHasApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iHasApp.h; sourceTree = "<group>"; };
+		63BE815016531C4D0082D861 /* iHasApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iHasApp.m; sourceTree = "<group>"; };
+		63BE81561653615E0082D861 /* schemeApps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schemeApps.json; sourceTree = "<group>"; };
 		63FF2FD0163485580054D385 /* iHasAppExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iHasAppExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FF2FD4163485580054D385 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		63FF2FD6163485580054D385 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -46,7 +50,6 @@
 		63FF2FED163485590054D385 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		63FF2FEF163485590054D385 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		63FF2FF0163485590054D385 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
-		63FF3004163486B00054D385 /* iHasApp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iHasApp.framework; path = ../iHasApp.framework; sourceTree = "<group>"; };
 		63FF30071634870B0054D385 /* placeholder-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder-icon.png"; sourceTree = "<group>"; };
 		63FF30081634870B0054D385 /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
 		63FF30091634870B0054D385 /* SDImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDImageCache.m; sourceTree = "<group>"; };
@@ -74,16 +77,27 @@
 				63FF2FD5163485580054D385 /* UIKit.framework in Frameworks */,
 				63FF2FD7163485580054D385 /* Foundation.framework in Frameworks */,
 				63FF2FD9163485580054D385 /* CoreGraphics.framework in Frameworks */,
-				63FF3005163486B00054D385 /* iHasApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63BE814E16531C4D0082D861 /* iHasApp */ = {
+			isa = PBXGroup;
+			children = (
+				63BE814F16531C4D0082D861 /* iHasApp.h */,
+				63BE815016531C4D0082D861 /* iHasApp.m */,
+				63BE81561653615E0082D861 /* schemeApps.json */,
+			);
+			name = iHasApp;
+			path = ../iHasApp;
+			sourceTree = "<group>";
+		};
 		63FF2FC5163485580054D385 = {
 			isa = PBXGroup;
 			children = (
+				63BE814E16531C4D0082D861 /* iHasApp */,
 				63FF2FDA163485590054D385 /* iHasAppExample */,
 				63FF2FD3163485580054D385 /* Frameworks */,
 				63FF2FD1163485580054D385 /* Products */,
@@ -111,7 +125,6 @@
 		63FF2FDA163485590054D385 /* iHasAppExample */ = {
 			isa = PBXGroup;
 			children = (
-				63FF30031634869E0054D385 /* iHasApp */,
 				63FF30061634870B0054D385 /* SDWebImage */,
 				63FF2FE3163485590054D385 /* AppDelegate.h */,
 				63FF2FE4163485590054D385 /* AppDelegate.m */,
@@ -136,15 +149,6 @@
 				63FF2FEA163485590054D385 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		63FF30031634869E0054D385 /* iHasApp */ = {
-			isa = PBXGroup;
-			children = (
-				63FF3004163486B00054D385 /* iHasApp.framework */,
-			);
-			name = iHasApp;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		63FF30061634870B0054D385 /* SDWebImage */ = {
@@ -227,6 +231,7 @@
 				63FF2FE9163485590054D385 /* Default@2x.png in Resources */,
 				63FF2FEB163485590054D385 /* Default-568h@2x.png in Resources */,
 				63FF30181634870B0054D385 /* placeholder-icon.png in Resources */,
+				63BE81571653615E0082D861 /* schemeApps.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +252,7 @@
 				63FF301C1634870B0054D385 /* SDWebImageManager.m in Sources */,
 				63FF301D1634870B0054D385 /* SDWebImagePrefetcher.m in Sources */,
 				63FF301E1634870B0054D385 /* UIImageView+WebCache.m in Sources */,
+				63BE815216531C4D0082D861 /* iHasApp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +331,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iHasAppExample/iHasAppExample-Prefix.pch";
 				INFOPLIST_FILE = "iHasAppExample/iHasAppExample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -340,6 +347,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iHasAppExample/iHasAppExample-Prefix.pch";
 				INFOPLIST_FILE = "iHasAppExample/iHasAppExample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -364,6 +372,7 @@
 				63FF3002163485590054D385 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
