@@ -1,3 +1,8 @@
+Notice (Nov 13, 2012):
+-----------
+
+iHasApp's codebase and dataset will be open sourced within the week. Check back!
+
 iHasApp Framework
 =========================
 
