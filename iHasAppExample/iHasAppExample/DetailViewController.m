@@ -130,7 +130,7 @@
     NSString *key = [self.appDictionary.allKeys objectAtIndex:indexPath.row];
     NSString *value = [[self.appDictionary objectForKey:key] description];
     
-    CGSize maxSize = CGSizeMake(self.view.bounds.size.width - 20.0f, 999.0f);
+    CGSize maxSize = CGSizeMake(self.view.bounds.size.width - 20.0f, CGFLOAT_MAX);
     CGSize labelSize = [value sizeWithFont:[UIFont systemFontOfSize:14.0f]
                          constrainedToSize:maxSize
                              lineBreakMode:NSLineBreakByTruncatingTail];
