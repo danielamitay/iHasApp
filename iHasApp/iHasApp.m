@@ -212,43 +212,54 @@
         NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
         NSString *appSchemesDictionaryPath = [selfBundle pathForResource:@"schemeApps"
                                                                   ofType:@"json"];
-        
-        NSError *dataError;
-        NSData *schemeAppsData = [NSData dataWithContentsOfFile:appSchemesDictionaryPath
-                                                        options:0
-                                                          error:&dataError];
-        if (dataError)
+        if (!appSchemesDictionaryPath)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (failureBlock)
                 {
-                    failureBlock(dataError);
+                    failureBlock(nil);
                 }
             });
         }
         else
         {
-            NSError *jsonError;
-            NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:schemeAppsData
-                                                                                 options:0
-                                                                                   error:&jsonError];
-            if (jsonError)
+            NSError *dataError;
+            NSData *schemeAppsData = [NSData dataWithContentsOfFile:appSchemesDictionaryPath
+                                                            options:0
+                                                              error:&dataError];
+            if (dataError)
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (failureBlock)
                     {
-                        failureBlock(jsonError);
+                        failureBlock(dataError);
                     }
                 });
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (successBlock)
-                    {
-                        successBlock(schemeAppsDictionary);
-                    }
-                });
+                NSError *jsonError;
+                NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:schemeAppsData
+                                                                                     options:0
+                                                                                       error:&jsonError];
+                if (jsonError)
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (failureBlock)
+                        {
+                            failureBlock(jsonError);
+                        }
+                    });
+                }
+                else
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (successBlock)
+                        {
+                            successBlock(schemeAppsDictionary);
+                        }
+                    });
+                }
             }
         }
     });
