@@ -30,7 +30,7 @@
     NSString *countryCode = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
  
  */
-@property (nonatomic, strong) NSString *country;
+@property (nonatomic, copy) NSString *country;
 
 
 /**---------------------------------------------------------------------------------------
