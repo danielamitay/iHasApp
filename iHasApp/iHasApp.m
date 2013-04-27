@@ -76,7 +76,7 @@
         } failure:failureBlock];
         
     });
-    #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+    #if !OS_OBJECT_USE_OBJC
         dispatch_release(detection_thread);
     #endif
 }
@@ -186,7 +186,7 @@
             }
         }
     });
-    #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+    #if !OS_OBJECT_USE_OBJC
         dispatch_release(retrieval_thread);
     #endif
 }
@@ -263,7 +263,7 @@
             }
         }
     });
-    #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+    #if !OS_OBJECT_USE_OBJC
         dispatch_release(retrieval_thread);
     #endif
 }
@@ -319,7 +319,7 @@
             }
         }
     });
-    #if __IPHONE_OS_VERSION_MIN_REQUIRED < 60000
+    #if !OS_OBJECT_USE_OBJC
         dispatch_release(retrieval_thread);
     #endif
 }
