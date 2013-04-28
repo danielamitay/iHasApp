@@ -37,6 +37,7 @@
                                                    withCount:1000];
             for (NSArray *schemeDictionariesArray in arrayOfArrays)
             {
+            NSArray *arrayOfArrays =  [self subarraysOfArray:schemeDictionaries withCount:1000];
                 [operationQueue addOperationWithBlock: ^{
                     NSMutableSet *incrementalAppIds = [NSMutableSet set];
                     for (NSDictionary *schemeDictionary in schemeDictionariesArray)
