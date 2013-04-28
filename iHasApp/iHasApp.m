@@ -16,15 +16,13 @@
 
 - (void)detectAppIdsWithIncremental:(void (^)(NSArray *appIds))incrementalBlock
                         withSuccess:(void (^)(NSArray *appIds))successBlock
-                        withFailure:(void (^)(NSError *error))failureBlock
-{
+                        withFailure:(void (^)(NSError *error))failureBlock {
     dispatch_queue_t detection_thread = dispatch_queue_create(NULL, NULL);
     dispatch_async(detection_thread, ^{
         
         [self retrieveSchemeAppsDictionaryWithSuccess:^(NSDictionary *schemeAppsDictionary) {
             NSMutableArray *schemeDictionaries = [NSMutableArray new];
-            for (NSString *scheme in schemeAppsDictionary.allKeys)
-            {
+            for (NSString *scheme in schemeAppsDictionary.allKeys) {
                 NSArray *appIds = [schemeAppsDictionary objectForKey:scheme];
                 NSDictionary *schemeDictionary = @{@"scheme" : scheme, @"ids" : appIds};
                 [schemeDictionaries addObject:schemeDictionary];
@@ -33,24 +31,17 @@
             __block BOOL successBlockExecuted = FALSE;
             NSMutableSet *successfulAppIds = [NSMutableSet set];
             NSOperationQueue *operationQueue = [NSOperationQueue new];
-            NSArray *arrayOfArrays =  [self subarraysOfArray:schemeDictionaries
-                                                   withCount:1000];
-            for (NSArray *schemeDictionariesArray in arrayOfArrays)
-            {
             NSArray *arrayOfArrays =  [self subarraysOfArray:schemeDictionaries withCount:1000];
+            for (NSArray *schemeDictionariesArray in arrayOfArrays) {
                 [operationQueue addOperationWithBlock: ^{
                     NSMutableSet *incrementalAppIds = [NSMutableSet set];
-                    for (NSDictionary *schemeDictionary in schemeDictionariesArray)
-                    {
+                    for (NSDictionary *schemeDictionary in schemeDictionariesArray) {
                         NSString *scheme = [schemeDictionary objectForKey:@"scheme"];
                         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://", scheme]];
-                        if([[UIApplication sharedApplication] canOpenURL:url])
-                        {
+                        if([[UIApplication sharedApplication] canOpenURL:url]) {
                             NSArray *appIds = [schemeDictionary objectForKey:@"ids"];
-                            for (NSString *appId in appIds)
-                            {
-                                if (![successfulAppIds containsObject:appId])
-                                {
+                            for (NSString *appId in appIds) {
+                                if (![successfulAppIds containsObject:appId]) {
                                     [successfulAppIds addObject:appId];
                                     [incrementalAppIds addObject:appId];
                                 }
@@ -58,16 +49,14 @@
                         }
                     }
                     dispatch_sync(dispatch_get_main_queue(), ^{
-                        if (incrementalBlock && incrementalAppIds.count)
-                        {
+                        if (incrementalBlock && incrementalAppIds.count) {
                             incrementalBlock(incrementalAppIds.allObjects);
                         }
                     });
                     /* Unhappy with this implementation */
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1f * NSEC_PER_SEC),
                                    dispatch_get_main_queue(), ^{
-                                       if (operationQueue.operationCount == 0 && successBlock && !successBlockExecuted)
-                                       {
+                                       if (operationQueue.operationCount == 0 && successBlock && !successBlockExecuted) {
                                            successBlockExecuted = TRUE;
                                            successBlock(successfulAppIds.allObjects);
                                        }
@@ -84,8 +73,7 @@
 
 - (void)detectAppDictionariesWithIncremental:(void (^)(NSArray *appDictionaries))incrementalBlock
                                  withSuccess:(void (^)(NSArray *appDictionaries))successBlock
-                                 withFailure:(void (^)(NSError *error))failureBlock
-{
+                                 withFailure:(void (^)(NSError *error))failureBlock {
     __block BOOL successBlockExecuted = FALSE;
     __block BOOL appIdDetectionComplete = FALSE;
     __block NSInteger netAppIncrements = 0;
@@ -103,8 +91,7 @@
                                                           if (appIdDetectionComplete &&
                                                               !netAppIncrements &&
                                                               successBlock &&
-                                                              !successBlockExecuted)
-                                                          {
+                                                              !successBlockExecuted) {
                                                               successBlockExecuted = TRUE;
                                                               successBlock(successfulAppDictionaries);
                                                           }
@@ -117,8 +104,7 @@
                                                           if (appIdDetectionComplete &&
                                                               !netAppIncrements &&
                                                               successBlock &&
-                                                              !successBlockExecuted)
-                                                          {
+                                                              !successBlockExecuted) {
                                                               successBlockExecuted = TRUE;
                                                               successBlock(successfulAppDictionaries);
                                                           }
@@ -131,8 +117,7 @@
 
 - (void)retrieveAppDictionariesForAppIds:(NSArray *)appIds
                              withSuccess:(void (^)(NSArray *appDictionaries))successBlock
-                             withFailure:(void (^)(NSError *error))failureBlock
-{
+                             withFailure:(void (^)(NSError *error))failureBlock {
     dispatch_queue_t retrieval_thread = dispatch_queue_create(NULL, NULL);
     dispatch_async(retrieval_thread, ^{
         
@@ -151,36 +136,27 @@
         NSData *result = [NSURLConnection sendSynchronousRequest:request
                                                returningResponse:&response
                                                            error:&connectionError];
-        if (connectionError)
-        {
+        if (connectionError) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (failureBlock)
-                {
+                if (failureBlock) {
                     failureBlock(connectionError);
                 }
             });
-        }
-        else
-        {
+        } else {
             NSError *jsonError;
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:result
                                                                            options:0
                                                                              error:&jsonError];
-            if (jsonError)
-            {
+            if (jsonError) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (failureBlock)
-                    {
+                    if (failureBlock) {
                         failureBlock(jsonError);
                     }
                 });
-            }
-            else
-            {
+            } else {
                 NSArray *results = [jsonDictionary objectForKey:@"results"];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (successBlock)
-                    {
+                    if (successBlock) {
                         successBlock(results);
                     }
                 });
@@ -195,8 +171,7 @@
 #pragma mark - Internal methods
 
 - (void)retrieveSchemeAppsDictionaryWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
-                                        failure:(void (^)(NSError *error))failureBlock
-{
+                                        failure:(void (^)(NSError *error))failureBlock {
     [self retrieveSchemeAppsDictionaryFromLocalWithSuccess:successBlock
                                                    failure:^(NSError *error) {
                                                        [self retrieveSchemeAppsDictionaryFromWebWithSuccess:successBlock
@@ -205,25 +180,20 @@
 }
 
 - (void)retrieveSchemeAppsDictionaryFromLocalWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
-                                                 failure:(void (^)(NSError *error))failureBlock
-{
+                                                 failure:(void (^)(NSError *error))failureBlock {
     dispatch_queue_t retrieval_thread = dispatch_queue_create(NULL, NULL);
     dispatch_async(retrieval_thread, ^{
         
         NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
         NSString *appSchemesDictionaryPath = [selfBundle pathForResource:@"schemeApps"
                                                                   ofType:@"json"];
-        if (!appSchemesDictionaryPath)
-        {
+        if (!appSchemesDictionaryPath) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (failureBlock)
-                {
+                if (failureBlock) {
                     failureBlock(nil);
                 }
             });
-        }
-        else
-        {
+        } else {
             NSError *dataError;
             NSData *schemeAppsData = [NSData dataWithContentsOfFile:appSchemesDictionaryPath
                                                             options:0
@@ -231,32 +201,24 @@
             if (dataError)
             {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (failureBlock)
-                    {
+                    if (failureBlock) {
                         failureBlock(dataError);
                     }
                 });
-            }
-            else
-            {
+            } else {
                 NSError *jsonError;
                 NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:schemeAppsData
                                                                                      options:0
                                                                                        error:&jsonError];
-                if (jsonError)
-                {
+                if (jsonError) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        if (failureBlock)
-                        {
+                        if (failureBlock) {
                             failureBlock(jsonError);
                         }
                     });
-                }
-                else
-                {
+                } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        if (successBlock)
-                        {
+                        if (successBlock) {
                             successBlock(schemeAppsDictionary);
                         }
                     });
@@ -270,8 +232,7 @@
 }
 
 - (void)retrieveSchemeAppsDictionaryFromWebWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
-                                               failure:(void (^)(NSError *error))failureBlock
-{
+                                               failure:(void (^)(NSError *error))failureBlock {
     dispatch_queue_t retrieval_thread = dispatch_queue_create(NULL, NULL);
     dispatch_async(retrieval_thread, ^{
         
@@ -285,35 +246,26 @@
         NSData *result = [NSURLConnection sendSynchronousRequest:request
                                                returningResponse:&response
                                                            error:&connectionError];
-        if (connectionError)
-        {
+        if (connectionError) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (failureBlock)
-                {
+                if (failureBlock) {
                     failureBlock(connectionError);
                 }
             });
-        }
-        else
-        {
+        } else {
             NSError *jsonError;
             NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:result
                                                                                  options:0
                                                                                    error:&jsonError];
-            if (jsonError)
-            {
+            if (jsonError) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (failureBlock)
-                    {
+                    if (failureBlock) {
                         failureBlock(jsonError);
                     }
                 });
-            }
-            else
-            {
+            } else {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (successBlock)
-                    {
+                    if (successBlock) {
                         successBlock(schemeAppsDictionary);
                     }
                 });
@@ -328,13 +280,11 @@
 
 #pragma mark - Helper methods
 
-- (NSArray *)subarraysOfArray:(NSArray *)array withCount:(NSInteger)subarraySize
-{
+- (NSArray *)subarraysOfArray:(NSArray *)array withCount:(NSInteger)subarraySize {
     int j = 0;
     int itemsRemaining = [array count];
     NSMutableArray *arrayOfArrays = [NSMutableArray new];
-    while(j < [array count])
-    {
+    while(j < [array count]) {
         NSRange range = NSMakeRange(j, MIN(subarraySize, itemsRemaining));
         NSArray *subarray = [array subarrayWithRange:range];
         [arrayOfArrays addObject:subarray];
@@ -346,10 +296,8 @@
 
 #pragma mark - Property methods
 
-- (NSString *)country
-{
-    if (!_country)
-    {
+- (NSString *)country {
+    if (!_country) {
         _country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
     }
     return _country;
