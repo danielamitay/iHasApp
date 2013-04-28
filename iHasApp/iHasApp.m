@@ -298,7 +298,7 @@
 
 - (NSString *)country {
     if (!_country) {
-        _country = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+        _country = [(NSLocale *)[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
     }
     return _country;
 }
