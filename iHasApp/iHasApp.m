@@ -21,7 +21,7 @@
     dispatch_async(detection_thread, ^{
         
         [self retrieveSchemeAppsDictionaryWithSuccess:^(NSDictionary *schemeAppsDictionary) {
-            NSMutableArray *schemeDictionaries = [NSMutableArray new];
+            NSMutableArray *schemeDictionaries = [[NSMutableArray alloc] init];
             for (NSString *scheme in schemeAppsDictionary.allKeys) {
                 NSArray *appIds = [schemeAppsDictionary objectForKey:scheme];
                 NSDictionary *schemeDictionary = @{@"scheme" : scheme, @"ids" : appIds};
@@ -29,12 +29,12 @@
             }
             
             __block BOOL successBlockExecuted = FALSE;
-            NSMutableSet *successfulAppIds = [NSMutableSet set];
-            NSOperationQueue *operationQueue = [NSOperationQueue new];
+            NSMutableSet *successfulAppIds = [[NSMutableSet alloc] init];
+            NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
             NSArray *arrayOfArrays =  [self subarraysOfArray:schemeDictionaries withCount:1000];
             for (NSArray *schemeDictionariesArray in arrayOfArrays) {
                 [operationQueue addOperationWithBlock: ^{
-                    NSMutableSet *incrementalAppIds = [NSMutableSet set];
+                    NSMutableSet *incrementalAppIds = [[NSMutableSet alloc] init];
                     for (NSDictionary *schemeDictionary in schemeDictionariesArray) {
                         NSString *scheme = [schemeDictionary objectForKey:@"scheme"];
                         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://", scheme]];
@@ -77,7 +77,7 @@
     __block BOOL successBlockExecuted = FALSE;
     __block BOOL appIdDetectionComplete = FALSE;
     __block NSInteger netAppIncrements = 0;
-    NSMutableArray *successfulAppDictionaries = [NSMutableArray new];
+    NSMutableArray *successfulAppDictionaries = [[NSMutableArray alloc] init];
     [self detectAppIdsWithIncremental:^(NSArray *appIds) {
         netAppIncrements += 1;
         [self retrieveAppDictionariesForAppIds:appIds
@@ -122,14 +122,14 @@
     dispatch_async(retrieval_thread, ^{
         
         NSString *appString = [appIds componentsJoinedByString:@","];
-        NSMutableString *requestUrlString = [NSMutableString new];
+        NSMutableString *requestUrlString = [[NSMutableString alloc] init];
         [requestUrlString appendFormat:@"http://itunes.apple.com/lookup"];
         [requestUrlString appendFormat:@"?id=%@", appString];
         [requestUrlString appendFormat:@"&country=%@", self.country];
         
         NSURLResponse *response;
         NSError *connectionError;
-        NSMutableURLRequest *request = [NSMutableURLRequest new];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:[NSURL URLWithString:requestUrlString]];
         [request setTimeoutInterval:20.0f];
         [request setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
@@ -238,7 +238,7 @@
         
         NSURLResponse *response;
         NSError *connectionError;
-        NSMutableURLRequest *request = [NSMutableURLRequest new];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [[NSURLCache sharedURLCache] setMemoryCapacity:1024*1024*2];
         [request setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
         [request setURL:[NSURL URLWithString:@"https://ihasapp.herokuapp.com/api/schemeApps.json"]];
@@ -283,7 +283,7 @@
 - (NSArray *)subarraysOfArray:(NSArray *)array withCount:(NSInteger)subarraySize {
     int j = 0;
     int itemsRemaining = [array count];
-    NSMutableArray *arrayOfArrays = [NSMutableArray new];
+    NSMutableArray *arrayOfArrays = [[NSMutableArray alloc] init];
     while(j < [array count]) {
         NSRange range = NSMakeRange(j, MIN(subarraySize, itemsRemaining));
         NSArray *subarray = [array subarrayWithRange:range];
