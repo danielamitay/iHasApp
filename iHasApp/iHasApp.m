@@ -281,8 +281,8 @@
 #pragma mark - Helper methods
 
 - (NSArray *)subarraysOfArray:(NSArray *)array withCount:(NSInteger)subarraySize {
-    int j = 0;
-    int itemsRemaining = [array count];
+    NSInteger j = 0;
+    NSInteger itemsRemaining = [array count];
     NSMutableArray *arrayOfArrays = [[NSMutableArray alloc] init];
     while(j < [array count]) {
         NSRange range = NSMakeRange(j, MIN(subarraySize, itemsRemaining));
