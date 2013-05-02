@@ -41,7 +41,7 @@
                                                                                         action:@selector(detectApps)];
     self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     
-    self.detectionObject = [iHasApp new];
+    self.detectionObject = [[iHasApp alloc] init];
     
     [self detectApps];
 }
@@ -61,22 +61,17 @@
     
     NSLog(@"Detection begun!");
     [self.detectionObject detectAppDictionariesWithIncremental:^(NSArray *appDictionaries) {
-        
         NSLog(@"Incremental appDictionaries.count: %i", appDictionaries.count);
         NSMutableArray *newAppDictionaries = [NSMutableArray arrayWithArray:self.detectedApps];
         [newAppDictionaries addObjectsFromArray:appDictionaries];
         self.detectedApps = newAppDictionaries;
         [self.tableView reloadData];
-        
     } withSuccess:^(NSArray *appDictionaries) {
-        
         NSLog(@"Successful appDictionaries.count: %i", appDictionaries.count);
         self.detectedApps = appDictionaries;
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [self.tableView reloadData];
-        
     } withFailure:^(NSError *error) {
-        
         NSLog(@"Error: %@", error.localizedDescription);
         self.detectedApps = [NSArray array];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -87,7 +82,6 @@
                                                   otherButtonTitles:nil];
         [alertView show];
         [self.tableView reloadData];
-        
     }];
     
     self.detectedApps = nil;
