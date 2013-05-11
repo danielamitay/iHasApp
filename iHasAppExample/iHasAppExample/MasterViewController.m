@@ -28,7 +28,7 @@
     [super viewDidLoad];
     
     self.title = @"Apps";
-    self.tableView.rowHeight = 57.0f;
+    self.tableView.rowHeight = 64.0f;
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
     {
@@ -133,12 +133,18 @@
     
     NSString *trackName = [appDictionary objectForKey:@"trackName"];
     NSString *trackId = [[appDictionary objectForKey:@"trackId"] description];
-    NSString *artworkUrl60 = [appDictionary objectForKey:@"artworkUrl60"];
+    //NSString *artworkUrl60 = [appDictionary objectForKey:@"artworkUrl60"];
+    
+    NSString *iconUrlString = [appDictionary objectForKey:@"artworkUrl512"];
+    NSArray *iconUrlComponents = [iconUrlString componentsSeparatedByString:@"."];
+    NSMutableArray *mutableIconURLComponents = [[NSMutableArray alloc] initWithArray:iconUrlComponents];
+    [mutableIconURLComponents insertObject:@"128x128-75" atIndex:mutableIconURLComponents.count-1];
+    iconUrlString = [mutableIconURLComponents componentsJoinedByString:@"."];
     
     cell.textLabel.text = trackName;
     cell.detailTextLabel.text = trackId;
     
-    [cell.imageView setImageWithURL:[NSURL URLWithString:artworkUrl60]
+    [cell.imageView setImageWithURL:[NSURL URLWithString:iconUrlString]
                    placeholderImage:[UIImage imageNamed:@"placeholder-icon"]];
     
     return cell;
