@@ -17,7 +17,7 @@
 - (void)detectAppIdsWithIncremental:(void (^)(NSArray *appIds))incrementalBlock
                         withSuccess:(void (^)(NSArray *appIds))successBlock
                         withFailure:(void (^)(NSError *error))failureBlock {
-    dispatch_queue_t detection_thread = dispatch_queue_create(NULL, NULL);
+    dispatch_queue_t detection_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(detection_thread, ^{
         
         [self retrieveSchemeAppsDictionaryWithSuccess:^(NSDictionary *schemeAppsDictionary) {
@@ -118,7 +118,7 @@
 - (void)retrieveAppDictionariesForAppIds:(NSArray *)appIds
                              withSuccess:(void (^)(NSArray *appDictionaries))successBlock
                              withFailure:(void (^)(NSError *error))failureBlock {
-    dispatch_queue_t retrieval_thread = dispatch_queue_create(NULL, NULL);
+    dispatch_queue_t retrieval_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(retrieval_thread, ^{
         
         NSString *appString = [appIds componentsJoinedByString:@","];
@@ -181,7 +181,7 @@
 
 - (void)retrieveSchemeAppsDictionaryFromLocalWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
                                                  failure:(void (^)(NSError *error))failureBlock {
-    dispatch_queue_t retrieval_thread = dispatch_queue_create(NULL, NULL);
+    dispatch_queue_t retrieval_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(retrieval_thread, ^{
         
         NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
@@ -233,7 +233,7 @@
 
 - (void)retrieveSchemeAppsDictionaryFromWebWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
                                                failure:(void (^)(NSError *error))failureBlock {
-    dispatch_queue_t retrieval_thread = dispatch_queue_create(NULL, NULL);
+    dispatch_queue_t retrieval_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(retrieval_thread, ^{
         
         NSURLResponse *response;
