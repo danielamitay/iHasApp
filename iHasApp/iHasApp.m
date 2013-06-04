@@ -66,9 +66,6 @@
         } failure:failureBlock];
         
     });
-    #if !OS_OBJECT_USE_OBJC
-        dispatch_release(detection_thread);
-    #endif
 }
 
 - (void)detectAppDictionariesWithIncremental:(void (^)(NSArray *appDictionaries))incrementalBlock
@@ -163,9 +160,6 @@
             }
         }
     });
-    #if !OS_OBJECT_USE_OBJC
-        dispatch_release(retrieval_thread);
-    #endif
 }
 
 #pragma mark - Internal methods
@@ -226,9 +220,6 @@
             }
         }
     });
-    #if !OS_OBJECT_USE_OBJC
-        dispatch_release(retrieval_thread);
-    #endif
 }
 
 - (void)retrieveSchemeAppsDictionaryFromWebWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
@@ -272,9 +263,6 @@
             }
         }
     });
-    #if !OS_OBJECT_USE_OBJC
-        dispatch_release(retrieval_thread);
-    #endif
 }
 
 
