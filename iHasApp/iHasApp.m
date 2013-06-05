@@ -124,8 +124,8 @@
         [requestUrlString appendFormat:@"?id=%@", appString];
         [requestUrlString appendFormat:@"&country=%@", self.country];
         
-        NSURLResponse *response;
-        NSError *connectionError;
+        NSURLResponse *response = nil;
+        NSError *connectionError = nil;
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:[NSURL URLWithString:requestUrlString]];
         [request setTimeoutInterval:20.0f];
@@ -140,7 +140,7 @@
                 }
             });
         } else {
-            NSError *jsonError;
+            NSError *jsonError = nil;
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:result
                                                                            options:0
                                                                              error:&jsonError];
@@ -188,7 +188,7 @@
                 }
             });
         } else {
-            NSError *dataError;
+            NSError *dataError = nil;
             NSData *schemeAppsData = [NSData dataWithContentsOfFile:appSchemesDictionaryPath
                                                             options:0
                                                               error:&dataError];
@@ -200,7 +200,7 @@
                     }
                 });
             } else {
-                NSError *jsonError;
+                NSError *jsonError = nil;
                 NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:schemeAppsData
                                                                                      options:0
                                                                                        error:&jsonError];
@@ -227,8 +227,8 @@
     dispatch_queue_t retrieval_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(retrieval_thread, ^{
         
-        NSURLResponse *response;
-        NSError *connectionError;
+        NSURLResponse *response = nil;
+        NSError *connectionError = nil;
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [[NSURLCache sharedURLCache] setMemoryCapacity:1024*1024*2];
         [request setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
@@ -244,7 +244,7 @@
                 }
             });
         } else {
-            NSError *jsonError;
+            NSError *jsonError = nil;
             NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:result
                                                                                  options:0
                                                                                    error:&jsonError];
