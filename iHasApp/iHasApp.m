@@ -142,7 +142,7 @@
         } else {
             NSError *jsonError = nil;
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:result
-                                                                           options:0
+                                                                           options:NSJSONReadingMutableLeaves
                                                                              error:&jsonError];
             if (jsonError) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -190,7 +190,7 @@
         } else {
             NSError *dataError = nil;
             NSData *schemeAppsData = [NSData dataWithContentsOfFile:appSchemesDictionaryPath
-                                                            options:0
+                                                            options:NSDataReadingMappedIfSafe
                                                               error:&dataError];
             if (dataError)
             {
@@ -202,7 +202,7 @@
             } else {
                 NSError *jsonError = nil;
                 NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:schemeAppsData
-                                                                                     options:0
+                                                                                     options:NSJSONReadingMutableLeaves
                                                                                        error:&jsonError];
                 if (jsonError) {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -246,7 +246,7 @@
         } else {
             NSError *jsonError = nil;
             NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:result
-                                                                                 options:0
+                                                                                 options:NSJSONReadingMutableLeaves
                                                                                    error:&jsonError];
             if (jsonError) {
                 dispatch_async(dispatch_get_main_queue(), ^{
