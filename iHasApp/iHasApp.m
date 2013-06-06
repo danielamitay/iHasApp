@@ -271,8 +271,9 @@
 - (NSArray *)subarraysOfArray:(NSArray *)array withCount:(NSInteger)subarraySize {
     NSInteger j = 0;
     NSInteger itemsRemaining = [array count];
+    NSInteger arrayCount = [array count];
     NSMutableArray *arrayOfArrays = [[NSMutableArray alloc] init];
-    while(j < [array count]) {
+    while(j < arrayCount) {
         NSRange range = NSMakeRange(j, MIN(subarraySize, itemsRemaining));
         NSArray *subarray = [array subarrayWithRange:range];
         [arrayOfArrays addObject:subarray];
