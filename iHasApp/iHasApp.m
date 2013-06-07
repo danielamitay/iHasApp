@@ -166,11 +166,9 @@
 
 - (void)retrieveSchemeAppsDictionaryWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
                                         failure:(void (^)(NSError *error))failureBlock {
-    [self retrieveSchemeAppsDictionaryFromLocalWithSuccess:successBlock
-                                                   failure:^(NSError *error) {
-                                                       [self retrieveSchemeAppsDictionaryFromWebWithSuccess:successBlock
-                                                                                                    failure:failureBlock];
-                                                   }];
+    [self retrieveSchemeAppsDictionaryFromLocalWithSuccess:successBlock failure:^(NSError *error) {
+        [self retrieveSchemeAppsDictionaryFromWebWithSuccess:successBlock failure:failureBlock];
+    }];
 }
 
 - (void)retrieveSchemeAppsDictionaryFromLocalWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
@@ -179,8 +177,7 @@
     dispatch_async(retrieval_thread, ^{
         
         NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
-        NSString *appSchemesDictionaryPath = [selfBundle pathForResource:@"schemeApps"
-                                                                  ofType:@"json"];
+        NSString *appSchemesDictionaryPath = [selfBundle pathForResource:@"schemeApps" ofType:@"json"];
         if (!appSchemesDictionaryPath) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (failureBlock) {
@@ -288,7 +285,8 @@
 
 - (NSString *)country {
     if (!_country) {
-        _country = [(NSLocale *)[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
+        NSLocale *currentLocale = [NSLocale currentLocale];
+        _country = [currentLocale objectForKey:NSLocaleCountryCode];
     }
     return _country;
 }
