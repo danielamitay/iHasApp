@@ -48,11 +48,11 @@
                             }
                         }
                     }
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        if (incrementalBlock && incrementalAppIds.count) {
+                    if (incrementalBlock && incrementalAppIds.count) {
+                        dispatch_sync(dispatch_get_main_queue(), ^{
                             incrementalBlock(incrementalAppIds.allObjects);
-                        }
-                    });
+                        });
+                    }
                     /* Unhappy with this implementation */
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1f * NSEC_PER_SEC),
                                    dispatch_get_main_queue(), ^{
@@ -134,29 +134,29 @@
                                                returningResponse:&response
                                                            error:&connectionError];
         if (connectionError) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (failureBlock) {
+            if (failureBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
                     failureBlock(connectionError);
-                }
-            });
+                });
+            }
         } else {
             NSError *jsonError = nil;
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:result
                                                                            options:NSJSONReadingMutableLeaves
                                                                              error:&jsonError];
             if (jsonError) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (failureBlock) {
+                if (failureBlock) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         failureBlock(jsonError);
-                    }
-                });
+                    });
+                }
             } else {
-                NSArray *results = [jsonDictionary objectForKey:@"results"];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (successBlock) {
+                if (successBlock) {
+                    NSArray *results = [jsonDictionary objectForKey:@"results"];
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         successBlock(results);
-                    }
-                });
+                    });
+                }
             }
         }
     });
@@ -179,40 +179,39 @@
         NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
         NSString *appSchemesDictionaryPath = [selfBundle pathForResource:@"schemeApps" ofType:@"json"];
         if (!appSchemesDictionaryPath) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (failureBlock) {
+            if (failureBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
                     failureBlock(nil);
-                }
-            });
+                });
+            }
         } else {
             NSError *dataError = nil;
             NSData *schemeAppsData = [NSData dataWithContentsOfFile:appSchemesDictionaryPath
                                                             options:NSDataReadingMappedIfSafe
                                                               error:&dataError];
-            if (dataError)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (failureBlock) {
+            if (dataError) {
+                if (failureBlock) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         failureBlock(dataError);
-                    }
-                });
+                    });
+                }
             } else {
                 NSError *jsonError = nil;
                 NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:schemeAppsData
                                                                                      options:NSJSONReadingMutableLeaves
                                                                                        error:&jsonError];
                 if (jsonError) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (failureBlock) {
+                    if (failureBlock) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
                             failureBlock(jsonError);
-                        }
-                    });
+                        });
+                    }
                 } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (successBlock) {
+                    if (successBlock) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
                             successBlock(schemeAppsDictionary);
-                        }
-                    });
+                        });
+                    }
                 }
             }
         }
@@ -235,28 +234,28 @@
                                                returningResponse:&response
                                                            error:&connectionError];
         if (connectionError) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (failureBlock) {
+            if (failureBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
                     failureBlock(connectionError);
-                }
-            });
+                });
+            }
         } else {
             NSError *jsonError = nil;
             NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:result
                                                                                  options:NSJSONReadingMutableLeaves
                                                                                    error:&jsonError];
             if (jsonError) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (failureBlock) {
+                if (failureBlock) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         failureBlock(jsonError);
-                    }
-                });
+                    });
+                }
             } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (successBlock) {
+                if (successBlock) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         successBlock(schemeAppsDictionary);
-                    }
-                });
+                    });
+                }
             }
         }
     });
