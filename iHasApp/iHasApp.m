@@ -269,16 +269,17 @@
 #pragma mark - Helper methods
 
 - (NSArray *)subarraysOfArray:(NSArray *)array withCount:(NSInteger)subarraySize {
-    NSInteger j = 0;
-    NSInteger itemsRemaining = [array count];
+    NSInteger rangeLocation = 0;
     NSInteger arrayCount = [array count];
+    NSInteger itemsRemaining = [array count];
     NSMutableArray *arrayOfArrays = [[NSMutableArray alloc] init];
-    while(j < arrayCount) {
-        NSRange range = NSMakeRange(j, MIN(subarraySize, itemsRemaining));
+    while(rangeLocation < arrayCount) {
+        NSInteger rangeLength = MIN(subarraySize, itemsRemaining);
+        NSRange range = NSMakeRange(rangeLocation, rangeLength);
         NSArray *subarray = [array subarrayWithRange:range];
         [arrayOfArrays addObject:subarray];
-        itemsRemaining -= range.length;
-        j += range.length;
+        itemsRemaining -= rangeLength;
+        rangeLocation += rangeLength;
     }
     return arrayOfArrays;
 }
