@@ -12,7 +12,7 @@
  
  See http://www.iHasApp.com/ for information and updates.
  
- *Requirements:* iOS base SDK 5.0+, Internet connectivity
+ *Requirements:* iOS base SDK 5.0+, Internet connectivity for app dictionary retrieval
   
  */
 @interface iHasApp : NSObject
