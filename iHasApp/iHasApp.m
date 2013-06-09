@@ -122,7 +122,9 @@
         NSMutableString *requestUrlString = [[NSMutableString alloc] init];
         [requestUrlString appendFormat:@"http://itunes.apple.com/lookup"];
         [requestUrlString appendFormat:@"?id=%@", appString];
-        [requestUrlString appendFormat:@"&country=%@", self.country];
+        if (self.country) {
+            [requestUrlString appendFormat:@"&country=%@", self.country];
+        }
         
         NSURLResponse *response = nil;
         NSError *connectionError = nil;
