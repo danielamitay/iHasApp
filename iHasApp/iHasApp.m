@@ -19,7 +19,6 @@
                         withFailure:(void (^)(NSError *error))failureBlock {
     dispatch_queue_t detection_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(detection_thread, ^{
-        
         [self retrieveSchemeAppsDictionaryWithSuccess:^(NSDictionary *schemeAppsDictionary) {
             NSMutableArray *schemeDictionaries = [[NSMutableArray alloc] init];
             for (NSString *scheme in schemeAppsDictionary.allKeys) {
@@ -29,28 +28,28 @@
             }
             
             __block BOOL successBlockExecuted = FALSE;
-            NSMutableSet *successfulAppIds = [[NSMutableSet alloc] init];
+            NSMutableDictionary *successfulAppIds = [[NSMutableDictionary alloc] init];
             NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
             NSArray *arrayOfArrays =  [self subarraysOfArray:schemeDictionaries withCount:1000];
             for (NSArray *schemeDictionariesArray in arrayOfArrays) {
                 [operationQueue addOperationWithBlock: ^{
-                    NSMutableSet *incrementalAppIds = [[NSMutableSet alloc] init];
+                    NSMutableDictionary *incrementalAppIds = [[NSMutableDictionary alloc] init];
                     for (NSDictionary *schemeDictionary in schemeDictionariesArray) {
                         NSString *scheme = [schemeDictionary objectForKey:@"scheme"];
                         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://", scheme]];
-                        if([[UIApplication sharedApplication] canOpenURL:url]) {
+                        if ([[UIApplication sharedApplication] canOpenURL:url]) {
                             NSArray *appIds = [schemeDictionary objectForKey:@"ids"];
                             for (NSString *appId in appIds) {
-                                if (![successfulAppIds containsObject:appId]) {
-                                    [successfulAppIds addObject:appId];
-                                    [incrementalAppIds addObject:appId];
+                                if (successfulAppIds[appId] == nil) {
+                                    successfulAppIds[appId] = [NSObject new];
+                                    incrementalAppIds[appId] = [NSObject new];
                                 }
                             }
                         }
                     }
                     if (incrementalBlock && incrementalAppIds.count) {
                         dispatch_sync(dispatch_get_main_queue(), ^{
-                            incrementalBlock(incrementalAppIds.allObjects);
+                            incrementalBlock(incrementalAppIds.allKeys);
                         });
                     }
                     /* Unhappy with this implementation */
@@ -58,13 +57,12 @@
                                    dispatch_get_main_queue(), ^{
                                        if (operationQueue.operationCount == 0 && successBlock && !successBlockExecuted) {
                                            successBlockExecuted = TRUE;
-                                           successBlock(successfulAppIds.allObjects);
+                                           successBlock(successfulAppIds.allKeys);
                                        }
                                    });
                 }];
             }
         } failure:failureBlock];
-        
     });
 }
 
@@ -117,7 +115,6 @@
                              withFailure:(void (^)(NSError *error))failureBlock {
     dispatch_queue_t retrieval_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(retrieval_thread, ^{
-        
         NSString *appString = [appIds componentsJoinedByString:@","];
         NSMutableString *requestUrlString = [[NSMutableString alloc] init];
         [requestUrlString appendFormat:@"http://itunes.apple.com/lookup"];
@@ -177,7 +174,6 @@
                                                  failure:(void (^)(NSError *error))failureBlock {
     dispatch_queue_t retrieval_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(retrieval_thread, ^{
-        
         NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
         NSString *appSchemesDictionaryPath = [selfBundle pathForResource:@"schemeApps" ofType:@"json"];
         if (!appSchemesDictionaryPath) {
@@ -224,7 +220,6 @@
                                                failure:(void (^)(NSError *error))failureBlock {
     dispatch_queue_t retrieval_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(retrieval_thread, ^{
-        
         NSURLResponse *response = nil;
         NSError *connectionError = nil;
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
