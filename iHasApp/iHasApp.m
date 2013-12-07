@@ -52,14 +52,14 @@
                             incrementalBlock(incrementalAppIds.allKeys);
                         });
                     }
-                    /* Unhappy with this implementation */
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1f * NSEC_PER_SEC),
-                                   dispatch_get_main_queue(), ^{
-                                       if (operationQueue.operationCount == 0 && successBlock && !successBlockExecuted) {
-                                           successBlockExecuted = TRUE;
-                                           successBlock(successfulAppIds.allKeys);
-                                       }
-                                   });
+                    // Unhappy with this implementation
+                    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, 0.1f * NSEC_PER_SEC);
+                    dispatch_after(delay, dispatch_get_main_queue(), ^{
+                        if (operationQueue.operationCount == 0 && successBlock && !successBlockExecuted) {
+                            successBlockExecuted = TRUE;
+                            successBlock(successfulAppIds.allKeys);
+                        }
+                    });
                 }];
             }
         } failure:failureBlock];
@@ -74,36 +74,36 @@
     __block NSInteger netAppIncrements = 0;
     NSMutableArray *successfulAppDictionaries = [[NSMutableArray alloc] init];
     [self detectAppIdsWithIncremental:^(NSArray *appIds) {
-        netAppIncrements += 1;
+        netAppIncrements++;
         [self retrieveAppDictionariesForAppIds:appIds
                                    withSuccess:^(NSArray *appDictionaries) {
                                        [successfulAppDictionaries addObjectsFromArray:appDictionaries];
                                        incrementalBlock(appDictionaries);
-                                       netAppIncrements -= 1;
-                                       /* Unhappy with this implementation */
-                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1f * NSEC_PER_SEC),
-                                                      dispatch_get_main_queue(), ^{
-                                                          if (appIdDetectionComplete &&
-                                                              !netAppIncrements &&
-                                                              successBlock &&
-                                                              !successBlockExecuted) {
-                                                              successBlockExecuted = TRUE;
-                                                              successBlock(successfulAppDictionaries);
-                                                          }
-                                                      });
+                                       netAppIncrements--;
+                                       // Unhappy with this implementation
+                                       dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, 0.1f * NSEC_PER_SEC);
+                                       dispatch_after(delay, dispatch_get_main_queue(), ^{
+                                           if (appIdDetectionComplete &&
+                                               !netAppIncrements &&
+                                               successBlock &&
+                                               !successBlockExecuted) {
+                                               successBlockExecuted = TRUE;
+                                               successBlock(successfulAppDictionaries);
+                                           }
+                                       });
                                    } withFailure:^(NSError *error) {
-                                       netAppIncrements -= 1;
-                                       /* Unhappy with this implementation */
-                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1f * NSEC_PER_SEC),
-                                                      dispatch_get_main_queue(), ^{
-                                                          if (appIdDetectionComplete &&
-                                                              !netAppIncrements &&
-                                                              successBlock &&
-                                                              !successBlockExecuted) {
-                                                              successBlockExecuted = TRUE;
-                                                              successBlock(successfulAppDictionaries);
-                                                          }
-                                                      });
+                                       netAppIncrements--;
+                                       // Unhappy with this implementation
+                                       dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, 0.1f * NSEC_PER_SEC);
+                                       dispatch_after(delay, dispatch_get_main_queue(), ^{
+                                           if (appIdDetectionComplete &&
+                                               !netAppIncrements &&
+                                               successBlock &&
+                                               !successBlockExecuted) {
+                                               successBlockExecuted = TRUE;
+                                               successBlock(successfulAppDictionaries);
+                                           }
+                                       });
                                    }];
     } withSuccess:^(NSArray *appIds) {
         appIdDetectionComplete = TRUE;
@@ -132,34 +132,29 @@
         NSData *result = [NSURLConnection sendSynchronousRequest:request
                                                returningResponse:&response
                                                            error:&connectionError];
-        if (connectionError) {
-            if (failureBlock) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    failureBlock(connectionError);
-                });
-            }
+        if (connectionError && failureBlock) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failureBlock(connectionError);
+            });
         } else {
             NSError *jsonError = nil;
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:result
                                                                            options:NSJSONReadingMutableLeaves
                                                                              error:&jsonError];
-            if (jsonError) {
-                if (failureBlock) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        failureBlock(jsonError);
-                    });
-                }
-            } else {
-                if (successBlock) {
-                    NSArray *results = [jsonDictionary objectForKey:@"results"];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        successBlock(results);
-                    });
-                }
+            if (jsonError && failureBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    failureBlock(jsonError);
+                });
+            } else if (successBlock) {
+                NSArray *results = [jsonDictionary objectForKey:@"results"];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    successBlock(results);
+                });
             }
         }
     });
 }
+
 
 #pragma mark - Internal methods
 
@@ -176,40 +171,32 @@
     dispatch_async(retrieval_thread, ^{
         NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
         NSString *appSchemesDictionaryPath = [selfBundle pathForResource:@"schemeApps" ofType:@"json"];
-        if (!appSchemesDictionaryPath) {
-            if (failureBlock) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    failureBlock(nil);
-                });
-            }
+        if (!appSchemesDictionaryPath && failureBlock) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failureBlock(nil);
+            });
         } else {
             NSError *dataError = nil;
             NSData *schemeAppsData = [NSData dataWithContentsOfFile:appSchemesDictionaryPath
                                                             options:NSDataReadingMappedIfSafe
                                                               error:&dataError];
-            if (dataError) {
-                if (failureBlock) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        failureBlock(dataError);
-                    });
-                }
+            if (dataError && failureBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    failureBlock(dataError);
+                });
             } else {
                 NSError *jsonError = nil;
                 NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:schemeAppsData
                                                                                      options:NSJSONReadingMutableLeaves
                                                                                        error:&jsonError];
-                if (jsonError) {
-                    if (failureBlock) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            failureBlock(jsonError);
-                        });
-                    }
-                } else {
-                    if (successBlock) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            successBlock(schemeAppsDictionary);
-                        });
-                    }
+                if (jsonError && failureBlock) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        failureBlock(jsonError);
+                    });
+                } else if (successBlock) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        successBlock(schemeAppsDictionary);
+                    });
                 }
             }
         }
@@ -230,29 +217,23 @@
         NSData *result = [NSURLConnection sendSynchronousRequest:request
                                                returningResponse:&response
                                                            error:&connectionError];
-        if (connectionError) {
-            if (failureBlock) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    failureBlock(connectionError);
-                });
-            }
+        if (connectionError && failureBlock) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failureBlock(connectionError);
+            });
         } else {
             NSError *jsonError = nil;
             NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:result
                                                                                  options:NSJSONReadingMutableLeaves
                                                                                    error:&jsonError];
-            if (jsonError) {
-                if (failureBlock) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        failureBlock(jsonError);
-                    });
-                }
-            } else {
-                if (successBlock) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        successBlock(schemeAppsDictionary);
-                    });
-                }
+            if (jsonError && failureBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    failureBlock(jsonError);
+                });
+            } else if (successBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    successBlock(schemeAppsDictionary);
+                });
             }
         }
     });
@@ -276,6 +257,7 @@
     }
     return arrayOfArrays;
 }
+
 
 #pragma mark - Property methods
 
