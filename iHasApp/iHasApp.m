@@ -203,7 +203,7 @@
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [[NSURLCache sharedURLCache] setMemoryCapacity:1024*1024*2];
         [request setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
-        [request setURL:[NSURL URLWithString:@"https://ihasapp.herokuapp.com/api/schemeApps.json"]];
+        [request setURL:[NSURL URLWithString:@"http://ihasapp.herokuapp.com/api/schemeApps.json"]];
         [request setTimeoutInterval:30.0f];
         NSData *result = [NSURLConnection sendSynchronousRequest:request
                                                returningResponse:&response
