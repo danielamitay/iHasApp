@@ -26,42 +26,33 @@
                 NSDictionary *schemeDictionary = @{@"scheme" : scheme, @"ids" : appIds};
                 [schemeDictionaries addObject:schemeDictionary];
             }
-            
-            __block BOOL successBlockExecuted = FALSE;
+            UIApplication *application = [UIApplication sharedApplication];
             NSMutableDictionary *successfulAppIds = [[NSMutableDictionary alloc] init];
-            NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
             NSArray *arrayOfArrays =  [self subarraysOfArray:schemeDictionaries withCount:1000];
             for (NSArray *schemeDictionariesArray in arrayOfArrays) {
-                [operationQueue addOperationWithBlock: ^{
-                    NSMutableDictionary *incrementalAppIds = [[NSMutableDictionary alloc] init];
-                    for (NSDictionary *schemeDictionary in schemeDictionariesArray) {
-                        NSString *scheme = [schemeDictionary objectForKey:@"scheme"];
-                        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://", scheme]];
-                        if ([[UIApplication sharedApplication] canOpenURL:url]) {
-                            NSArray *appIds = [schemeDictionary objectForKey:@"ids"];
-                            for (NSString *appId in appIds) {
-                                if (successfulAppIds[appId] == nil) {
-                                    successfulAppIds[appId] = [NSObject new];
-                                    incrementalAppIds[appId] = [NSObject new];
-                                }
+                NSMutableDictionary *incrementalAppIds = [[NSMutableDictionary  alloc] init];
+                for (NSDictionary *schemeDictionary in schemeDictionariesArray) {
+                    NSString *scheme = [schemeDictionary objectForKey:@"scheme"];
+                    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://", scheme]];
+                    if ([application canOpenURL:url]) {
+                        NSArray *appIds = [schemeDictionary objectForKey:@"ids"];
+                        for (NSString *appId in appIds) {
+                            if (successfulAppIds[appId] == nil) {
+                                successfulAppIds[appId] = [NSObject new];
+                                incrementalAppIds[appId] = [NSObject new];
                             }
                         }
                     }
-                    if (incrementalBlock && incrementalAppIds.count) {
-                        dispatch_sync(dispatch_get_main_queue(), ^{
-                            incrementalBlock(incrementalAppIds.allKeys);
-                        });
-                    }
-                    // Unhappy with this implementation
-                    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, 0.1f * NSEC_PER_SEC);
-                    dispatch_after(delay, dispatch_get_main_queue(), ^{
-                        if (operationQueue.operationCount == 0 && successBlock && !successBlockExecuted) {
-                            successBlockExecuted = TRUE;
-                            successBlock(successfulAppIds.allKeys);
-                        }
+                }
+                if (incrementalBlock && incrementalAppIds.count) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        incrementalBlock(incrementalAppIds.allKeys);
                     });
-                }];
+                }
             }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                successBlock(successfulAppIds.allKeys);
+            });
         } failure:failureBlock];
     });
 }
