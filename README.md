@@ -7,12 +7,19 @@ Detection results can be in the form of an array of detected appIds, or an array
 
 ![Screenshot](https://github.com/danielamitay/iHasApp/raw/master/screenshot.png)
 
+Frequently Asked Questions
+-----------
+
+- [How does it detect apps?](FAQ.md#how-does-it-detect-apps)
+- [How was schemeApps.json compiled?](FAQ.md#how-was-schemeappsjson-compiled)
+- [Why is it not detecting all of my apps?](FAQ.md#why-is-it-not-detecting-all-of-my-apps)
+- [Will using iHasApp get my app rejected?](FAQ.md#will-using-ihasapp-get-my-app-rejected)
+
 Background
 -----------
 
 - [How To Detect Installed iOS Apps](http://danielamitay.com/blog/2011/2/16/how-to-detect-installed-ios-apps) - (Feb 2011)
 - [Detailed iPhone App IPA Statistics](http://danielamitay.com/blog/2011/5/9/detailed-iphone-app-ipa-statistics) - (May 2011)
-
 
 Basic Setup
 -----------
