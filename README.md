@@ -45,7 +45,6 @@ Requirements
 -----------
 
 - iOS base SDK 5.0+
-- Internet connectivity for app dictionary retrieval
 
 *Note*: schemeApps.json only adds ~180kB to your final, compiled IPA
 

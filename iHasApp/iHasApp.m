@@ -151,9 +151,7 @@
 
 - (void)retrieveSchemeAppsDictionaryWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
                                         failure:(void (^)(NSError *error))failureBlock {
-    [self retrieveSchemeAppsDictionaryFromLocalWithSuccess:successBlock failure:^(NSError *error) {
-        [self retrieveSchemeAppsDictionaryFromWebWithSuccess:successBlock failure:failureBlock];
-    }];
+    [self retrieveSchemeAppsDictionaryFromLocalWithSuccess:successBlock failure:failureBlock];
 }
 
 - (void)retrieveSchemeAppsDictionaryFromLocalWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
@@ -189,42 +187,6 @@
                         successBlock(schemeAppsDictionary);
                     });
                 }
-            }
-        }
-    });
-}
-
-- (void)retrieveSchemeAppsDictionaryFromWebWithSuccess:(void (^)(NSDictionary *schemeAppsDictionary))successBlock
-                                               failure:(void (^)(NSError *error))failureBlock {
-    dispatch_queue_t retrieval_thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(retrieval_thread, ^{
-        NSURLResponse *response = nil;
-        NSError *connectionError = nil;
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        [[NSURLCache sharedURLCache] setMemoryCapacity:1024*1024*2];
-        [request setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
-        [request setURL:[NSURL URLWithString:@"http://ihasapp.herokuapp.com/api/schemeApps.json"]];
-        [request setTimeoutInterval:30.0f];
-        NSData *result = [NSURLConnection sendSynchronousRequest:request
-                                               returningResponse:&response
-                                                           error:&connectionError];
-        if (connectionError && failureBlock) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                failureBlock(connectionError);
-            });
-        } else {
-            NSError *jsonError = nil;
-            NSDictionary *schemeAppsDictionary = [NSJSONSerialization JSONObjectWithData:result
-                                                                                 options:NSJSONReadingMutableLeaves
-                                                                                   error:&jsonError];
-            if (jsonError && failureBlock) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    failureBlock(jsonError);
-                });
-            } else if (successBlock) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    successBlock(schemeAppsDictionary);
-                });
             }
         }
     });
