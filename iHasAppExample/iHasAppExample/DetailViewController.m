@@ -22,15 +22,12 @@
 
 - (void)setAppDictionary:(NSDictionary *)appDictionary
 {
-    if (_appDictionary != appDictionary)
-    {
+    if (_appDictionary != appDictionary) {
         _appDictionary = appDictionary;
-        
         [self configureView];
     }
     
-    if (self.masterPopoverController != nil)
-    {
+    if (self.masterPopoverController != nil) {
         [self.masterPopoverController dismissPopoverAnimated:YES];
     }
 }
@@ -38,14 +35,11 @@
 - (void)configureView
 {
     [self.tableView reloadData];
-    if (self.appDictionary)
-    {
+    if (self.appDictionary) {
         self.title = [self.appDictionary objectForKey:@"trackName"];
         NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.tableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    }
-    else
-    {
+    } else {
         self.title = nil;
     }
     
@@ -60,12 +54,9 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-    {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    }
-    else
-    {
+    } else {
         return YES;
     }
 }
@@ -89,12 +80,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	if(self.appDictionary)
-    {
+	if (self.appDictionary) {
 		return @"Key-value pairs";
-	}
-    else
-    {
+	} else {
         return nil;
 	}
 }
@@ -109,8 +97,7 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
-    {
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.detailTextLabel.numberOfLines = 0;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

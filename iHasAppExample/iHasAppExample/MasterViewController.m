@@ -30,8 +30,7 @@
     self.title = @"Apps";
     self.tableView.rowHeight = 64.0f;
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
-    {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.clearsSelectionOnViewWillAppear = NO;
         self.contentSizeForViewInPopover = CGSizeMake(320.0f, 600.0f);
     }
@@ -50,24 +49,22 @@
 
 - (void)detectApps
 {
-    if ([UIApplication sharedApplication].networkActivityIndicatorVisible)
-    {
+    if ([UIApplication sharedApplication].networkActivityIndicatorVisible) {
         return;
     }
-    if (self.detailViewController)
-    {
+    if (self.detailViewController) {
         self.detailViewController.appDictionary = nil;
     }
     
     NSLog(@"Detection begun!");
     [self.detectionObject detectAppDictionariesWithIncremental:^(NSArray *appDictionaries) {
-        NSLog(@"Incremental appDictionaries.count: %i", appDictionaries.count);
+        NSLog(@"Incremental appDictionaries.count: %lu", (unsigned long)appDictionaries.count);
         NSMutableArray *newAppDictionaries = [NSMutableArray arrayWithArray:self.detectedApps];
         [newAppDictionaries addObjectsFromArray:appDictionaries];
         self.detectedApps = newAppDictionaries;
         [self.tableView reloadData];
     } withSuccess:^(NSArray *appDictionaries) {
-        NSLog(@"Successful appDictionaries.count: %i", appDictionaries.count);
+        NSLog(@"Successful appDictionaries.count: %lu", (unsigned long)appDictionaries.count);
         self.detectedApps = appDictionaries;
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [self.tableView reloadData];
@@ -95,12 +92,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	if(self.detectedApps)
-    {
-		return [NSString stringWithFormat:@"%i Apps Detected", self.detectedApps.count];
-	}
-    else
-    {
+	if (self.detectedApps) {
+		return [NSString stringWithFormat:@"%lu Apps Detected", (unsigned long)self.detectedApps.count];
+	} else {
         return @"Detection in progress...";
 	}
 }
@@ -115,16 +109,12 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
-    {
+    if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-        {
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        }
-        else
-        {
+        } else {
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
         }
     }
@@ -153,17 +143,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *appDictionary = [self.detectedApps objectAtIndex:indexPath.row];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-    {
-	    if (!self.detailViewController)
-        {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+	    if (!self.detailViewController) {
 	        self.detailViewController = [[DetailViewController alloc] init];
 	    }
 	    self.detailViewController.appDictionary = appDictionary;
         [self.navigationController pushViewController:self.detailViewController animated:YES];
-    }
-    else
-    {
+    } else {
 	    self.detailViewController.appDictionary = appDictionary;
     }
 }
