@@ -12,7 +12,7 @@
  
  See http://www.iHasApp.com/ for information and updates.
  
- *Requirements:* iOS base SDK 5.0+, Internet connectivity for app dictionary retrieval
+ *Requirements:* iOS base SDK 5.0+
   
  */
 @interface iHasApp : NSObject
@@ -62,9 +62,9 @@
  
     iHasApp *detectionObject = [[iHasApp alloc] init];
     [detectionObject detectAppDictionariesWithIncremental:^(NSArray *appDictionaries) {
-        NSLog(@"Incremental appDictionaries.count: %i", appDictionaries.count);
+        NSLog(@"Incremental appDictionaries.count: %i", (int)appDictionaries.count);
     } withSuccess:^(NSArray *appDictionaries) {
-        NSLog(@"Successful appDictionaries.count: %i", appDictionaries.count);
+        NSLog(@"Successful appDictionaries.count: %i", (int)appDictionaries.count);
     } withFailure:^(NSError *error) {
         NSLog(@"Failure: %@", error.localizedDescription);
     }];

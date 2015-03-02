@@ -33,9 +33,9 @@ Example code:
 ```objective-c
 iHasApp *detectionObject = [[iHasApp alloc] init];
 [detectionObject detectAppDictionariesWithIncremental:^(NSArray *appDictionaries) {
-    NSLog(@"Incremental appDictionaries.count: %i", appDictionaries.count);
+    NSLog(@"Incremental appDictionaries.count: %i", (int)appDictionaries.count);
 } withSuccess:^(NSArray *appDictionaries) {
-    NSLog(@"Successful appDictionaries.count: %i", appDictionaries.count);
+    NSLog(@"Successful appDictionaries.count: %i", (int)appDictionaries.count);
 } withFailure:^(NSError *error) {
     NSLog(@"Failure: %@", error.localizedDescription);
 }];
@@ -61,18 +61,6 @@ Example Application
 This framework comes with an example application that demonstrates detection initialization and information display.
 
 The iHasAppExample project uses Olivier Poitrey's [SDWebImage](https://github.com/rs/SDWebImage) project to asynchronously display the app icons.
-
-Documentation
---------------
-
-The `iHasApp.h` header file is structurally commented. If you would like to see the Appledoc representation, visit the [iHasApp Documentation](http://www.ihasapp.com/documentation).
-
-To-Do
---------------
-
-- Comment code where appropriate
-- Provide IPA processing code
-- Informational methods
 
 Info & Support
 --------------
