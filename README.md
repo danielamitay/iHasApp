@@ -1,9 +1,12 @@
+### Notice:
+#####This project was made as a "proof of concept" demonstration of how to detect apps installed on an iOS device, from nearly four years ago. A truly effective app detection system relies upon an accurate and dynamic dataset, which this open source repository is ill-suited for.
+
+#####If app detection is an important part of your service, you should make sure to curate your own dataset (see the FAQ for more information), or consider using a more advanced service such as [iHasApp.com](https://www.ihasapp.com)
+
 iHasApp Framework
 =========================
 
-The `iHasApp` iOS Framework allows you to detect installed apps on a user's device.
-
-Detection results can be in the form of an array of detected appIds, or an array of appDictionaries from the [iTunes Search API](http://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html).
+The `iHasApp` iOS Framework allows you to detect installed apps on a user's device. Detection results can be in the form of an array of detected appIds, or an array of appDictionaries from the [iTunes Search API](http://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html).
 
 ![Screenshot](https://github.com/danielamitay/iHasApp/raw/master/screenshot.png)
 
