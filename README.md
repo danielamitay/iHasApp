@@ -1,7 +1,7 @@
 ### Notice:
-#####This project was made as a "proof of concept" demonstration of how to detect apps installed on an iOS device, from early 2011. Since then, it has been used extensively in many apps, to the point where Apple made the decision to ban the excessive use of `-canOpenURL:`, the method which iHasApp relies upon to determine app installation. As a result, using a list of URL schemes for app detection is no longer a viable method.
+##### This project was made as a "proof of concept" demonstration of how to detect apps installed on an iOS device, from early 2011. Since then, it has been used extensively in many apps, to the point where Apple made the decision to ban the excessive use of `-canOpenURL:`, the method which iHasApp relies upon to determine app installation. As a result, using a list of URL schemes for app detection is no longer a viable method.
 
-######Statement from Apple:
+###### Statement from Apple:
 > We found that your app uses public APIs in a manner not prescribed by Apple, which is not in compliance with the iOS Developer Program License Agreement, as required by the App Store Review Guidelines.
 
 > In particular, section 3.3.1 of the iOS Developer Program License Agreement specifies:
